@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.sound.js"></script>
+        <script src="sketch.js"></script>
+    </head>
+    <body>
+
+        <script>
+             let img, img_c, img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img_gameover, img_campeao;
+            let vel_mis = 1;
+            
+            let button;
+
+            let valor_tela = "capa";
+
+            let estado_cen = false,
+                    disparou = false,
+                    carro_virado = false,
+                    carrLado = false,
+                    saiu_b = false;
+            
+            let tiro_bol = false;
+
+            let y_car_1 = 330,
+                    y_car_2 = 330;
+            let x_car_1 = 258,
+                    x_car_2 = 353;
+
+            let y = -200,
+                    yCont = 0,
+                    contAux = 1,
+                    contAux2 = 1,
+                    contAux3 = 1;
+            let yCont_1 = 0,
+                    yCont_2 = -400,
+                    yCont_3 = -800,
+                    yCont_4 = -1200,
+                    yCont_5 = -1600,
+                    yCont_6 = -2000,
+                    yCont_7 = -2400,
+                    yCont_8 = -2800,
+                    yCont_9 = -3200,
+                    yCont_10 = -3600,
+                    yCont_11 = -4000,
+                    yCont_12 = -4400;
+
+            let vel_cen = -4,
+                    vel_car = 1,
+                    vel_car_2 = 0.01;
+
+            var car = [],
+                    missil = [];
+            let coor_y_car = [],
+                    coor_x_car = [],
+                    carros_aleatorios = [];
+            let fontsize = 15;
+            let pontuacao = 0,
+                    vidas = 5,
+                    nivel = 1;
+
+            var x_disp;
+            var y_disp;
+            let num_aux = 0
+            let music
+            /*function preload(){
+                 music = loadSound('som/musica.mp3')
+            }*/
+
+            function recarregarDados() {
+                music = loadSound('som/musica.mp3')
+                img,
+                        img_c,
+                        img1,
+                        img2,
+                        img3,
+                        img4,
+                        img5,
+                        img6,
+                        img7,
+                        img8,
+                        img9,
+                        img10,
+                        img11,
+                        img12,
+                        img_gameover,
+                        img_campeao;
+
+                vel_mis = 1;
+
+
+                valor_tela = "capa";
+
+                estado_cen = false,
+                        disparou = false,
+                        carro_virado = false,
+                        carrLado = false,
+                        saiu_b = false;
+
+                y_car_1 = 330,
+                        y_car_2 = 330;
+                x_car_1 = 258,
+                        x_car_2 = 353;
+
+                y = -200,
+                        yCont = 0,
+                        contAux = 1,
+                        contAux2 = 1,
+                        contAux3 = 1;
+                yCont_1 = 0,
+                        yCont_2 = -400,
+                        yCont_3 = -800,
+                        yCont_4 = -1200,
+                        yCont_5 = -1600,
+                        yCont_6 = -2000,
+                        yCont_7 = -2400,
+                        yCont_8 = -2800,
+                        yCont_9 = -3200,
+                        yCont_10 = -3600,
+                        yCont_11 = -4000,
+                        yCont_12 = -4400;
+
+                vel_cen = -4,
+                        vel_car = 1,
+                        vel_car_2 = 0.01;
+
+                car = [],
+                        missil = [];
+                coor_y_car = [],
+                        coor_x_car = [],
+                        carros_aleatorios = [];
+                fontsize = 15;
+                pontuacao = 0,
+                        vidas = 5,
+                        nivel = 1;
+                num_aux = 0
+            }
+
+            function carregarTudo() {
+                carregarImagens();
+                carregarCarros();
+                carregarMissil();
+                cenar_1();
+                cenar_2();
+                cenar_3();
+                cenar_4();
+                capa();
+                gameOver();
+                campeao();
+
+            }
+
+            function setup() {
+                
+                createCanvas(400, 400);
+                carregarTudo();
+                music = loadSound('som/musica.mp3')
+                
+                textSize(fontsize);
+                textAlign(CENTER, CENTER);
+
+                button = createButton('');
+
+            }
+
+            function draw() {
+                let c = color(255, 204, 0);
+                if (valor_tela == "capa") {
+                    image(img_inicial, 0, 0, 400, 400);
+
+                  
+                    music.playMode('restart');
+                    music.setVolume(0.5);
+                    music.play();
+                  
+                    let c = color(255, 204, 0);
+                    button.position(40, 298);
+                    button.size(280, 80);
+                    button.style('background-image', 'url("https://scontent.fnat7-1.fna.fbcdn.net/v/t1.0-9/78341517_816661338766410_8900316665707757568_n.jpg?_nc_cat=108&_nc_ohc=OK1WLvsv1xgAQmoH2hZ0Gdx53SlDLV_qyKJg0n56yn8zDCfNdaxfjmrfg&_nc_ht=scontent.fnat7-1.fna&oh=49db31a8a3bd2c115b3b007971cd4c84&oe=5E485777")');
+                    button.mousePressed(changeBG);
+
+                    if (saiu_b == true) {
+                        button.remove();
+                    }
+
+
+                } else {
+                    if (valor_tela == "gameover") {
+                        image(img_gameover, 0, 0, 400, 400);
+                        if (keyIsDown(32)) {
+                            valor_tela = "capa";
+                            if (keyIsDown(32)) {
+                                valor_tela = "capa";
+                                recarregarDados();
+                                carregarTudo();
+                                textSize(fontsize);
+                                textAlign(CENTER, CENTER);
+
+                                button = createButton('');
+                            }
+                        }
+                    } else {
+
+                        if (valor_tela == "campeao") {
+                            image(img_campeao, 0, 0, 400, 400);
+                            if (keyIsDown(32)) {
+                                valor_tela = "capa";
+                                recarregarDados()
+                                carregarTudo();
+                                textSize(fontsize);
+                                textAlign(CENTER, CENTER);
+
+                                button = createButton('');
+                            }
+                        } else {
+                            button.remove();
+                            cenario_1_init();
+                            yCont = yCont + vel_cen;
+                            vel_car = 0.01;
+
+                            if (yCont <= -2000) {
+                                nivel = 2;
+                                valor_tela = "nivel_" + nivel;
+                                if (yCont <= -40000) {
+                                    if (y_car_1 > y_car_2) {
+                                        valor_tela = "gameover";
+                                    } else {
+                                        valor_tela = "campeao";
+                                    }
+                                }
+                            }
+
+                            if (carro_virado && !keyIsDown(SHIFT)) {
+                                carregarCarros();
+                                y_car_1 = carMoviment(car[0], x_car_1, y_car_1, vel_car, vel_car, 35, 70);
+                                carro_virado = false;
+                            }
+
+
+                            if (keyIsDown(SHIFT) && keyIsDown(RIGHT_ARROW)) {
+                                if (x_car_1 < 362) {
+                                    x_car_1 = x_car_1 + 3
+                                }
+                            }
+
+                            if (keyIsDown(SHIFT) && keyIsDown(LEFT_ARROW)) {
+                                if (x_car_1 > 203) {
+                                    x_car_1 = x_car_1 - 3;
+                                }
+                            }
+
+                            if (keyIsDown(LEFT_ARROW) && keyIsDown(RIGHT_ARROW)) {
+                                vel_car = 0.3;
+                            } else {
+                                if (keyIsDown(LEFT_ARROW)) {
+                                    if (x_car_1 > 203) {
+                                        x_car_1 = x_car_1 - 3;
+                                    }
+                                }
+
+                                if (keyIsDown(RIGHT_ARROW)) {
+                                    if (x_car_1 < 362) {
+                                        x_car_1 = x_car_1 + 3
+                                    }
+                                }
+                            }
+
+                            if (keyIsDown(DOWN_ARROW)) {
+                                vel_car = -0.5;
+                            }
+
+                            if (keyIsDown(SHIFT) && !keyIsDown(LEFT_ARROW) && !keyIsDown(RIGHT_ARROW)) {
+                                if (!carrLado) {
+                                    carregarCarroLado();
+                                    carrLado = true;
+                                }
+
+                                y_car_1 = carMoviment(car[0], x_car_1, y_car_1, false, vel_car, 17.5, 70);
+                                carro_virado = true;
+                            } else {
+                                y_car_1 = carMoviment(car[0], x_car_1, y_car_1, false, vel_car, 35, 70);
+                                carrLado = false;
+                            }
+
+                            if (valor_tela == "nivel_2" || valor_tela == "nivel_1" || valor_tela == "nivel_3") {
+                                if (y_car_1 <= 0) {
+                                    atualizarCen();
+                                }
+                                y_car_2 = carMoviment(car[1], x_car_2, y_car_2, false, vel_car_2, 35, 70);
+                            }
+
+                            if (valor_tela == "nivel_2" || valor_tela == "nivel_3") {
+                                for (q = 0; q < coor_y_car.length; q++) {
+                                    coor_y_car[q] = carMovimentarVetor(coor_x_car[q], coor_y_car[q], carros_aleatorios[q]);
+                                }
+
+                                if ((yCont * -1) % 150 == 0) {
+                                    add_car_aleatorio();
+                                }
+                            }
+
+
+                            if (keyIsDown(32) || disparou) {
+                                num_aux = Math.floor(Math.random() * 3 + 0);
+                                disparou = true;
+                                img_missil = image(missil[num_aux], x_disp + 17.5, y_disp - 50, 10, 60);
+                                x_disp = x_car_1;
+                                vel_mis += 1;
+                                if (y_disp > -1) {
+                                    y_disp += -2 * (1 / 8) * vel_mis;
+                                } else {
+                                    disparou = false;
+                                    vel_mis = 1;
+                                    y_disp = y_car_1;
+                                }
+
+                                for (w = 0; w < coor_y_car.length; w++) {
+                                    if (((coor_y_car[w] < y_disp && (coor_y_car[w] + 70) > y_disp)) && ((coor_x_car[w] >= x_disp) && (coor_x_car[w] <= (x_disp + 35)) || (coor_x_car[w] <= x_disp) && ((coor_x_car[w] + 35) >= x_disp))) {
+                                        var num_aux_omega = Math.floor(Math.random() * (-8000 + 100 - 1) - 100);
+                                        pontuacao++;
+                                        if (pontuacao >= 1000) {
+                                            nivel = 3;
+                                            valor_tela = "nivel_" + 3;
+                                        }
+                                        coor_y_car[w] = num_aux_omega;
+                                        disparou = false;
+                                    }
+                                }
+                            }
+                            textAlign(LEFT);
+                            drawWords();
+                        }
+                    }
+                }
+            }
+
+            function changeBG() {
+                valor_tela = "nivel_1";
+                saiu_but = true;
+            }
+
+            function add_car_aleatorio() {
+                var x_car_vet = 258;
+                var pcn_1 = Math.floor(Math.random() * (5 - 2 + 1) + 2);
+                if (pcn_1 == 5) {
+                    x_car_vet = 258;
+                } else {
+                    if (pcn_1 == 4) {
+                        x_car_vet = 353;
+                    } else {
+                        if (pcn_1 == 3) {
+                            x_car_vet = 306;
+                        } else {
+                            x_car_vet = 213;
+                        }
+                    }
+                }
+
+                var pcn = Math.floor(Math.random() * (5 - 2 + 1) + 2);
+                var num_aux_2 = Math.floor(Math.random() * (-8000 + 100 - 1) - 100);
+                carros_aleatorios[carros_aleatorios.length] = car[pcn];
+                coor_y_car[coor_y_car.length] = num_aux_2 - 500;
+                coor_x_car[coor_x_car.length] = x_car_vet;
+            }
+
+            function carMovimentarVetor(x_coor_aleator, y_coor_aleator, carro) {
+
+                for (w = 0; w < coor_y_car.length; w++) {
+                    if (coor_y_car[w] > 400 && coor_y_car[w] <= 406) {
+                        pontuacao++;
+
+                        if (pontuacao >= 1000) {
+                            nivel = 3;
+                            valor_tela = "cenario_" + nivel;
+                            pontuacao = 0;
+                        }
+                    }
+
+                    if ((coor_y_car[w] < y_car_1 && (coor_y_car[w] + 70) > y_car_1) && ((coor_x_car[w] >= x_car_1) && (coor_x_car[w] <= (x_car_1 + 35)) || (coor_x_car[w] <= x_car_1) && ((coor_x_car[w] + 35) >= x_car_1))) {
+                        y_car_1 = 330;
+                        coor_y_car[w] = -5000;
+                        vidas--;
+                        if (vidas == 0) {
+                            valor_tela = "gameover";
+                        }
+                    }
+
+                    if (valor_tela == "nivel_1") {
+                        if ((coor_y_car[w] < y_car_2 && (coor_y_car[w] + 70) > y_car_2) && ((coor_x_car[w] >= x_car_2) && (coor_x_car[w] <= (x_car_2 + 35)) || (coor_x_car[w] <= x_car_2) && ((coor_x_car[w] + 35) >= x_car_2))) {
+                            y_car_2 = 330;
+                            coor_y_car[w] = -5000;
+                        }
+                    }
+                }
+
+                image(carro, x_coor_aleator, y_coor_aleator, 35, 70);
+                y_car_ale_1 = y_coor_aleator + 6;
+
+                //vetorRenov();
+
+                return y_car_ale_1;
+            }
+
+            function carMoviment(car, x_car, y_carro, direcao, velocidade, tamX, tamY) {
+                
+                if (direcao == true) {
+                    image(car, x_car, y_carro, tamX, tamY);
+                    y_car = y_carro + velocidade;
+                } else {
+                    image(car, x_car, y_carro, tamX, tamY);
+                    y_car = y_carro - velocidade;
+                }
+
+                if (valor_tela == "nivel_1") {
+                    if (vel_car_2 <= 1.75) {
+                        vel_car_2 = vel_car_2 + 0.00001;
+                    }
+                }
+                return y_car;
+            }
+
+            /*function vetorRenov(){
+             var aux_vet_car = [], aux_vet_position = [];
+             var verificador = false;
+             var aux_cont = -1;
+             
+             for(t = 0; t < carros_aleatorios.length; t++){
+             var position_ale = Math.floor(Math.random() * (-8000 + 500 - 1) - 2);
+             if(coor_y_car[t] >= 400){
+             coor_y_car[t] = position_ale;
+             }
+             }
+             }*/
+
+            function atualizarCen() {
+                y_car_1 = y_car_1 + 330;
+                y_car_2 = y_car_2 + 330;
+                yCont_1 = yCont_1 + 70;
+                yCont_2 = yCont_2 + 70;
+                yCont_3 = yCont_3 + 70;
+                yCont_4 = yCont_4 + 70;
+                yCont_5 = yCont_5 + 70;
+                yCont_6 = yCont_6 + 70;
+                yCont_7 = yCont_7 + 70;
+                yCont_8 = yCont_8 + 70;
+                yCont_9 = yCont_9 + 70;
+                yCont_10 = yCont_10 + 70;
+                yCont_11 = yCont_11 + 70;
+                yCont_12 = yCont_12 + 70;
+            }
+
+            function cenario_1_init() {
+
+                if (estado_cen == false) {
+
+                    image(img12, 0, yCont_12, 200, 400);
+                    image(img11, 0, yCont_11, 200, 400);
+                    image(img10, 0, yCont_10, 200, 400);
+
+                    image(img9, 0, yCont_9, 200, 400);
+                    image(img8, 0, yCont_8, 200, 400);
+                    image(img7, 0, yCont_7, 200, 400);
+
+                    image(img6, 0, yCont_6, 200, 400);
+                    image(img5, 0, yCont_5, 200, 400);
+                    image(img4, 0, yCont_4, 200, 400);
+
+                    image(img3, 0, yCont_3, 200, 400);
+                    image(img2, 0, yCont_2, 200, 400);
+                    image(img1, 0, yCont_1, 200, 400);
+
+                    image(img, 200, yCont_12, 200, 400);
+                    image(img, 200, yCont_12 + 200, 200, 401);
+                    image(img, 200, yCont_11, 200, 400);
+                    image(img, 200, yCont_11 + 200, 200, 401);
+                    image(img, 200, yCont_10, 200, 400);
+                    image(img, 200, yCont_10 + 200, 200, 401);
+                    image(img, 200, yCont_9, 200, 400);
+                    image(img, 200, yCont_9 + 200, 200, 401);
+                    image(img, 200, yCont_8, 200, 400);
+                    image(img, 200, yCont_8 + 200, 200, 401);
+                    image(img, 200, yCont_7, 200, 400);
+                    image(img, 200, yCont_7 + 200, 200, 401);
+                    image(img, 200, yCont_6, 200, 400);
+                    image(img, 200, yCont_6 + 200, 200, 401);
+                    image(img, 200, yCont_5, 200, 400);
+                    image(img, 200, yCont_5 + 200, 200, 401);
+                    image(img, 200, yCont_4, 200, 400);
+                    image(img, 200, yCont_4 + 200, 200, 401);
+                    image(img, 200, yCont_3, 200, 400);
+                    image(img, 200, yCont_3 + 200, 200, 401);
+                    image(img, 200, yCont_2, 200, 400);
+                    image(img, 200, yCont_2 + 200, 200, 401);
+                    image(img, 200, yCont_1, 200, 400);
+                    image(img, 200, yCont_1 + 200, 200, 401);
+                    estado_cen = true;
+                } else {
+                    yCont_1 = yCont_1 - vel_cen;
+                    yCont_2 = yCont_2 - vel_cen;
+                    yCont_3 = yCont_3 - vel_cen;
+                    yCont_4 = yCont_4 - vel_cen;
+                    yCont_5 = yCont_5 - vel_cen;
+                    yCont_6 = yCont_6 - vel_cen;
+                    yCont_7 = yCont_7 - vel_cen;
+                    yCont_8 = yCont_8 - vel_cen;
+                    yCont_9 = yCont_9 - vel_cen;
+                    yCont_10 = yCont_10 - vel_cen;
+                    yCont_11 = yCont_11 - vel_cen;
+                    yCont_12 = yCont_12 - vel_cen;
+
+                    image(img12, 0, yCont_12, 200, 400);
+                    image(img11, 0, yCont_11, 200, 400);
+                    image(img10, 0, yCont_10, 200, 400);
+
+                    image(img9, 0, yCont_9, 200, 400);
+                    image(img8, 0, yCont_8, 200, 400);
+                    image(img7, 0, yCont_7, 200, 400);
+
+                    image(img6, 0, yCont_6, 200, 400);
+                    image(img5, 0, yCont_5, 200, 400);
+                    image(img4, 0, yCont_4, 200, 400);
+
+                    image(img3, 0, yCont_3, 200, 400);
+                    image(img2, 0, yCont_2, 200, 400);
+                    image(img1, 0, yCont_1, 200, 400);
+
+                    image(img, 200, yCont_12, 200, 400);
+                    image(img, 200, yCont_12 + 200, 200, 401);
+                    image(img, 200, yCont_11, 200, 400);
+                    image(img, 200, yCont_11 + 200, 200, 401);
+                    image(img, 200, yCont_10, 200, 400);
+                    image(img, 200, yCont_10 + 200, 200, 401);
+                    image(img, 200, yCont_9, 200, 400);
+                    image(img, 200, yCont_9 + 200, 200, 401);
+                    image(img, 200, yCont_8, 200, 400);
+                    image(img, 200, yCont_8 + 200, 200, 401);
+                    image(img, 200, yCont_7, 200, 400);
+                    image(img, 200, yCont_7 + 200, 200, 401);
+                    image(img, 200, yCont_6, 200, 400);
+                    image(img, 200, yCont_6 + 200, 200, 401);
+                    image(img, 200, yCont_5, 200, 400);
+                    image(img, 200, yCont_5 + 200, 200, 401);
+                    image(img, 200, yCont_4, 200, 400);
+                    image(img, 200, yCont_4 + 200, 200, 401);
+                    image(img, 200, yCont_3, 200, 400);
+                    image(img, 200, yCont_3 + 200, 200, 401);
+                    image(img, 200, yCont_2, 200, 400);
+                    image(img, 200, yCont_2 + 200, 200, 401);
+                    image(img, 200, yCont_1, 200, 400);
+                    image(img, 200, yCont_1 + 200, 200, 401);
+
+                    if (yCont_1 >= 400) {
+                        yCont_1 = -4400;
+                    }
+
+                    if (yCont_2 >= 400) {
+                        yCont_2 = -4400;
+                    }
+
+                    if (yCont_3 >= 400) {
+                        yCont_3 = -4400;
+                    }
+
+                    if (yCont_4 >= 400) {
+                        yCont_4 = -4400;
+                    }
+
+                    if (yCont_5 >= 400) {
+                        yCont_5 = -4400;
+                    }
+
+                    if (yCont_6 >= 400) {
+                        yCont_6 = -4400;
+                    }
+
+                    if (yCont_7 >= 400) {
+                        yCont_7 = -4400;
+                    }
+
+                    if (yCont_8 >= 400) {
+                        yCont_8 = -4400;
+                    }
+
+                    if (yCont_9 >= 400) {
+                        yCont_9 = -4400;
+                    }
+
+                    if (yCont_10 >= 400) {
+                        yCont_10 = -4400;
+                    }
+
+                    if (yCont_11 >= 400) {
+                        yCont_11 = -4400;
+                    }
+
+                    if (yCont_12 >= 400) {
+                        yCont_12 = -4400;
+                    }
+
+                }
+            }
+
+            function drawWords() {
+                let c = color(255, 255, 255);
+                fill(c);
+                rect(10, 15, 180, 60);
+                fill(0);
+                text('Nível: ' + nivel, 20, 30);
+                fill(0);
+                text('Vidas: ' + vidas, 20, 46);
+                fill(0);
+                text('Pontuação: ' + pontuacao, 20, 63);
+            }
+
+            function carregarImagens() {
+                img = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/78909262_1258401257686385_780660582935166976_n.jpg?_nc_cat=106&_nc_ohc=1bQbhNPDtW8AQmQpkRBBt7IqQ9J7B4TcxTVAzl-OMA7kfZ6_xhjcEKEAg&_nc_ht=scontent.frec10-1.fna&oh=26bf3f23383c049f79e751db4f35a9d6&oe=5E8AEDD6');
+            }
+
+            function carregarCarros() {
+                car[0] = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/78046192_1258721544321023_7489255811156279296_n.jpg?_nc_cat=102&_nc_ohc=ubA6iYk_elsAQmPQOqBtOyvNA0YYTc5VJurditM_8zP76iomkBS3Ryieg&_nc_ht=scontent.frec10-1.fna&oh=f14f63ae8d601857b33640f807131c0a&oe=5E860863');
+
+                car[1] = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/75047321_1258791600980684_1909045437596172288_n.jpg?_nc_cat=102&_nc_ohc=LyF7R62XmDwAQnU9DwuMcRPIcJA5CHb6V6DoRn7JkpWlt3zPATAQiouhA&_nc_ht=scontent.frec10-1.fna&oh=6f7cc1cd5080384d69ed5b2c69a9955a&oe=5E864B2F');
+
+                car[2] = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/76685026_1258791594314018_5954627197015687168_n.jpg?_nc_cat=106&_nc_ohc=-1aCMm7rda8AQkcdVDCHcIVesMrtYB2b4QNl-GODXZ-ERxeCN4ZXG4RIg&_nc_ht=scontent.frec10-1.fna&oh=3c550465eca460a9350b8bf3843651ce&oe=5E810235');
+
+                car[3] = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/78931928_1258687450991099_7160731971683876864_n.jpg?_nc_cat=102&_nc_ohc=Ji-rjwNfBvYAQnIIqOVj4jePSXgCSQAIkiWP12-NKK_3qvw4312uDvTYA&_nc_ht=scontent.frec10-1.fna&oh=be23a5e3517fa1abbb9ad7425021f962&oe=5E84D157');
+
+                car[4] = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/76782751_812493032516574_2221243612455239680_n.jpg?_nc_cat=109&_nc_ohc=nnIAr5CyozUAQm_NGvbyMcE3xNfB6a0WgZOzp5t5DerNm_uG6x6doHUxg&_nc_ht=scontent.frec10-1.fna&oh=5220720f89453f8e216c02c9702b5943&oe=5E7765CF');
+
+                car[5] = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/77400787_812493029183241_485419119349334016_n.jpg?_nc_cat=102&_nc_ohc=0YMymKlmopoAQnoXi4F6Z2zztWoTOVJ5xMC8ifWhki2piJRYl9pSb7BTw&_nc_ht=scontent.frec10-1.fna&oh=96b0e88ea7c372f0d7b78c40f4d449bf&oe=5E7C3EEE');
+            }
+
+            function carregarMissil() {
+                missil[0] = loadImage('https://scontent.fnat7-1.fna.fbcdn.net/v/t1.0-9/77087713_812552379177306_3034639345198825472_n.jpg?_nc_cat=110&_nc_ohc=QJYqzlxYgwsAQnvDUhp-oMqfY6JUt-6cC67RggLrTphIZjjtuEthIxztw&_nc_ht=scontent.fnat7-1.fna&oh=381c2d6b9277fc14e5891df485550353&oe=5E8099BC');
+                missil[1] = loadImage('https://scontent.fnat7-1.fna.fbcdn.net/v/t1.0-9/78914335_812551992510678_2955545108671365120_n.jpg?_nc_cat=102&_nc_ohc=VkigTnAfTGoAQmk2EvHU-cmeaxRZWV72JVbhX8LZpU5bB8EdBUFoWS5Ug&_nc_ht=scontent.fnat7-1.fna&oh=eecad3a945a847fb4af1936ddd7b3df2&oe=5E7C075D');
+                missil[2] = loadImage('https://scontent.fnat7-1.fna.fbcdn.net/v/t1.0-9/73375538_812551982510679_2094607807402737664_n.jpg?_nc_cat=110&_nc_ohc=6g_3PHpb-dAAQmYK_V-f54Poc1SIf2alEIxUcc2fnsZhnBRrHty12F0NQ&_nc_ht=scontent.fnat7-1.fna&oh=5223002f5ac986993f37e457c4212404&oe=5E41A47D');
+                missil[3] = loadImage('https://scontent.fnat7-1.fna.fbcdn.net/v/t1.0-9/74381930_812551985844012_8484418975092965376_n.jpg?_nc_cat=109&_nc_ohc=nVyZLo3I8u8AQk0_uzC_BTGBPqhOrGtc3qomvmwT847AFMc8emouQazwg&_nc_ht=scontent.fnat7-1.fna&oh=318e3bd8a272a4ba22bb638022942edb&oe=5E8847D5');
+            }
+
+            function carregarCarroLado() {
+                car[0] = loadImage('https://scontent.fnat7-1.fna.fbcdn.net/v/t1.0-9/78919914_813016979130846_5317543509610201088_n.jpg?_nc_cat=104&_nc_ohc=tENBYEQJBsEAQl8dlX1XsusUdez1wlehibRgpx3vfY_GpphoFkWC5XmCA&_nc_ht=scontent.fnat7-1.fna&oh=92a1c8051d07e7f6f282b5d848907625&oe=5E731319');
+            }
+
+            function campeao() {
+                img_campeao = loadImage('https://scontent.fnat7-1.fna.fbcdn.net/v/t1.0-9/77394960_816663495432861_7110396831875465216_n.jpg?_nc_cat=100&_nc_ohc=BZ2qS6vudnwAQkQ_DF1DoGnH5BhdIdJ9NiWtI2JesBmZFNZTjv6oX3gVQ&_nc_ht=scontent.fnat7-1.fna&oh=901a600d530076995fb47221534d1718&oe=5E75F11E');
+            }
+
+            function cenar_1() {
+                img1 = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/74421292_1258412534351924_7806380700050915328_n.jpg?_nc_cat=108&_nc_ohc=VEe4dWWkbHIAQkr7GUFujOjNugFUGNqyGWsFd4-PjUC2r2esF6Ic82-cg&_nc_ht=scontent.frec10-1.fna&oh=db7c98c450c7d7f834b7c21f7f569daa&oe=5E4708A4');
+
+                img2 = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/79191053_1258412541018590_4365030298635730944_n.jpg?_nc_cat=107&_nc_ohc=516fh2aFNz0AQlB9dgyuMIH9BoRzrwD2tNBhckABLmwnQk33qzHjxS6ug&_nc_ht=scontent.frec10-1.fna&oh=585dc5f735b7ca6d6498b91237719e3c&oe=5E7E7B13');
+
+                img3 = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/76732963_1258491641010680_7259568059747139584_n.jpg?_nc_cat=100&_nc_ohc=WhJgpslJnUAAQmjU6IfEuR-CEhG0rLirD7-AseonT1lNQa7PmL3tZ0BnA&_nc_ht=scontent.frec10-1.fna&oh=852c0b0e404fcd706b4ca439a0d5bc73&oe=5E88CE44');
+            }
+
+            function cenar_2() {
+                img4 = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/76896133_813108795788331_824877365736767488_n.jpg?_nc_cat=110&_nc_ohc=3h_K39MCFXYAQn5EadXS_Lfsjuo2y7ILK2h65Slyl7FmEy_gDt7Gs9VIA&_nc_ht=scontent.frec10-1.fna&oh=e24b5d566f6481d5f351f2f482f047cc&oe=5E4BEF1B');
+
+                img5 = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/78706462_813108805788330_3240472813886242816_n.jpg?_nc_cat=101&_nc_ohc=o4P70imZ7FwAQnO_j2ZN1sQEC_ACSaskKZolwl2HZmMAf-YaYP3eFqXpw&_nc_ht=scontent.frec10-1.fna&oh=7baaef6aa79a9e50e854039a7ee348cc&oe=5E80A63C');
+
+                img6 = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/78636369_813108789121665_7915421630409474048_n.jpg?_nc_cat=104&_nc_ohc=Rz4BFWWrhpgAQngd2xHJewjJoyvtoFh1S84PGwfUXeuLWRx9cjuvrcpYw&_nc_ht=scontent.frec10-1.fna&oh=b4ee5906e65820c034e2903f934824de&oe=5E794661');
+            }
+
+            function cenar_3() {
+                img7 = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/76904498_813703622395515_1873832229096914944_n.jpg?_nc_cat=103&_nc_ohc=LmRLy5IMDI4AQngaN2Im_a1XGE4Q06t2NTLos9bYU1wlC5luF5gcFEkgA&_nc_ht=scontent.frec10-1.fna&oh=3f5aeaaca4c3d17608d0726f9eaf62eb&oe=5E43E769');
+
+                img8 = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/77213477_813703619062182_6767560155623063552_n.jpg?_nc_cat=105&_nc_ohc=guJL32he0YoAQkuQO_sXgNAzNkHO_aox2PwIrmy1zXtBW597ibiq4_TYQ&_nc_ht=scontent.frec10-1.fna&oh=ab4003978c6bf2acddbceca47de438c3&oe=5E7828F6');
+
+                img9 = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/78579341_813703629062181_7742640950131818496_n.jpg?_nc_cat=109&_nc_ohc=3N7BzCjf-6QAQkh8b_qDeOn3hsDLsTVv0GLm7DvVkv4JhosUsOQR2N5ZA&_nc_ht=scontent.frec10-1.fna&oh=1dface19179d56cba159300afeca2d84&oe=5E7E34C6');
+            }
+
+            function cenar_4() {
+                img10 = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/78594766_813757342390143_8364934659955490816_n.jpg?_nc_cat=100&_nc_eui2=AeEsQipJlGiDFXN99Q0ku_7xhTs1X6-Ne4Io4RlyfkDaaGPZ3ti0vcT-VZyp_7GqEyaVE2JuLHv0gMI43ImD5e1S7n5Pe9IgR0jfMhcmUlqbxQ&_nc_ohc=ftX4KV-RQDcAQn8TLb3oMB0LjqefxgRibYkF-cRS1btKcfYAQ4pxjpbSA&_nc_ht=scontent.frec10-1.fna&oh=5fc96d176a02fcf9831cf70064a9634d&oe=5E86C2BD');
+
+                img11 = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-0/p480x480/78457819_813757382390139_8502181752943411200_o.jpg?_nc_cat=102&_nc_eui2=AeFztiYFE6PSoJcH65maZEhWjbPwGu3UFA9PAXo_JcggoJ7dlGFRuJThEl5DTQNq2a0U0RoOOftR9n6K0RngP1n4WijLORrwJa4AIDHLfzowvA&_nc_ohc=FsjwX89P5H8AQnKZBQ4bSKbqapokMLiJFcSsYmSgDaxiZJpyWs-XfMWmw&_nc_ht=scontent.frec10-1.fna&oh=bff58a0ca1d24ff1484628ddf5d92a84&oe=5E810C2E');
+
+                img12 = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/77052669_813757349056809_9149473744387833856_n.jpg?_nc_cat=101&_nc_eui2=AeHh3OqukGlmh30AScyLbRbwayL-dYfyJSwIp9X2eiV4qZCYBxQuFYTMgndqXIePLdEzrvbIWd3vm1UHM-dxS7wBIADSyw3LxAuyrih9zBHBsQ&_nc_ohc=_JwDBGrWwNsAQlqUTsPCUq4EziJijO5qwrx9Q6bAZoHO7DdERXuJBcgFA&_nc_ht=scontent.frec10-1.fna&oh=a89b7757cec9f8917bc6134a3051cf9e&oe=5E49A54A');
+            }
+
+            function capa() {
+                img_c = loadImage('https://scontent.frec10-1.fna.fbcdn.net/v/t1.0-9/77160271_813845092381368_6344661225934159872_n.jpg?_nc_cat=106&_nc_eui2=AeH6TEZBeqgPwKFQbtycr_x9GlvbQETlhIl5W-_1lNGt3GtDGK_TQvkiju23_sFJdmWOus1ukelj7d2AYyvlP3WSxs6HeZS3uKzFOIsIAC6fhA&_nc_ohc=km-NbjA_2XAAQk8uvuZRRidfxpPy7TxySD3JYZNv4CxYCI9bVnuGXMfMw&_nc_ht=scontent.frec10-1.fna&oh=266c74c8f42d7403c4bde322cd9d5c2d&oe=5E7F99EE');
+                img_inicial = loadImage('https://scontent.fnat7-1.fna.fbcdn.net/v/t1.0-9/78337853_816661165433094_5622280054965796864_n.jpg?_nc_cat=106&_nc_ohc=Vem0Ml9BCIIAQnzUKk_15m7Tnb3McWdGGETaXDAmVuVebYlDOeK2_PGrg&_nc_ht=scontent.fnat7-1.fna&oh=0107a324b0b8f99bdaf5880de9dfe5fc&oe=5E73B3E5');
+            }
+
+            function gameOver() {
+                img_gameover = loadImage('https://scontent.fnat7-1.fna.fbcdn.net/v/t1.0-9/78054231_816663285432882_9164628437707522048_n.jpg?_nc_cat=104&_nc_ohc=v9_VnMzOr0EAQlnwjWsMfbonqusITUJfYVvhewY4kXxPtcRn_kYX5Qpcw&_nc_ht=scontent.fnat7-1.fna&oh=fcf0b30b66806dcec03fa0daf561507e&oe=5E78BE44');
+            }
+        </script>
+
+    </body>
+</html>
